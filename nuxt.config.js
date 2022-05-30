@@ -4,7 +4,7 @@ const routerBase =
   process.env.DEPLOY_ENV === "GH_PAGES"
     ? {
         router: {
-          base: "/sf-siren/",
+          base: "/flowers-for/",
         },
       }
     : {};
@@ -56,12 +56,6 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
-    [
-      "@nuxtjs/google-analytics",
-      {
-        id: "UA-154723261-1",
-      },
-    ],
   ],
   /*
    ** Axios module configuration
