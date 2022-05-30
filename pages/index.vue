@@ -1,61 +1,29 @@
 <template>
   <div class="container">
-    <ApproveAudio />
-    <div class="siren-wrapper">
-      <Siren />
-    </div>
-    <div>
+    <section class="title-wrapper">
       <h1 class="title">
-        sf-siren
+        Flowers For Katy
       </h1>
-      <h2 class="subtitle">
-        Miss the Tuesday noon siren? Get your fix here!
-      </h2>
-      <!--
-      <h2 class="subtitle">
-        <SirenText />
-      </h2>
-      -->
-    </div>
-    <Clock
-      v-if="shouldRenderNewShit"
-      :timezone="America/Tijuana"
-      :interval-time="500"
-      @on-clock-time-change="handleClockTimeChange"
-    >
-      <template v-slot:default="clock">
-        <div>
-          {{ clock.dateTime }}
-        </div>
-      </template>
-    </Clock>
-    <SirenAudio
-      :should-play-audio="isInTimeWindow"
-      :time="dateTime"
-    />
+    </section>
+    <section class="flower-wrapper">
+      <img class="flower-image" :src="month + '-flowers.jpg'">
+    </section>
   </div>
 </template>
 
 <script>
-import ApproveAudio from '~/components/approve-audio.vue'
-import Siren from '~/components/siren.vue'
-import SirenAudio from '~/components/siren-audio.vue'
-// import SirenText from '~/components/siren-text.vue'
 import Clock from '~/components/clock.vue'
 
 export default {
   components: {
-    ApproveAudio,
-    Siren,
-    SirenAudio,
-    // SirenText
     Clock
   },
   data () {
+    const dateTime = new Date();
+    const month = dateTime.getUTCMonth();
     return {
-      dateTime: new Date(),
-      isInTimeWindow: undefined,
-      shouldRenderNewShit: process.env.NODE_ENV === 'development'
+      dateTime,
+      month,
     }
   },
   methods: {
@@ -81,18 +49,11 @@ export default {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 1rem;
 }
 
-.siren-wrapper {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: -1;
-}
-
-.siren-wrapper svg {
-  fill: #CCC;
-  opacity: 0.5;
+.title-wrapper {
+  justify-content: center;
 }
 
 .title {
@@ -100,17 +61,18 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 2rem;
   color: #35495e;
   letter-spacing: 1px;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-  word-break: break-word;
+.flower-wrapper {
+  width: 100%;
+  height: auto;
+}
+
+.flower-image {
+  width: 100%;
+  height: auto;
 }
 </style>
