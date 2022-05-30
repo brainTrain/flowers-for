@@ -12,12 +12,9 @@
 </template>
 
 <script>
-import Clock from '~/components/clock.vue'
 
 export default {
-  components: {
-    Clock
-  },
+  components: {},
   data () {
     const dateTime = new Date();
     const month = dateTime.getUTCMonth();
