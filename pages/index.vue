@@ -1,14 +1,16 @@
 <template>
-  <div class="container">
-    <section class="title-wrapper">
-      <h1 class="title">
-        Flowers For Katy
-      </h1>
-    </section>
-    <section class="flower-wrapper">
-      <img class="flower-image" :src="month + '-flowers.jpg'">
-    </section>
-  </div>
+  <main class="page" :style="{'background-image': 'url(45-degree-fabric-light.png)'}">
+    <div class="container">
+      <section class="title-wrapper">
+        <h1 class="title">
+          Flowers For Katy
+        </h1>
+      </section>
+      <section class="flower-wrapper">
+        <img class="flower-image" :src="month + '-flowers.jpg'">
+      </section>
+    </div>
+  </main>
 </template>
 
 <script>
@@ -19,25 +21,23 @@ export default {
     const dateTime = new Date();
     const month = dateTime.getUTCMonth();
     return {
-      dateTime,
       month,
     }
   },
-  methods: {
-    handleClockTimeChange ({ dateTime, isInTimeWindow }) {
-      // only set value if it's changed
-      if (this.isInTimeWindow !== isInTimeWindow) {
-        this.isInTimeWindow = isInTimeWindow
-        this.dateTime = dateTime
-        // console.log('this.isInTimeWindow', this.isInTimeWindow)
-        // console.log('this.dateTime', this.dateTime)
-      }
-    }
-  }
+  methods: {}
 }
 </script>
 
+<style>
+</style>
+
 <style scoped>
+.page {
+  height: 100%;
+  width: 100%;
+  background-repeat: repeat;
+}
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
