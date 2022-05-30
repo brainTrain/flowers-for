@@ -42,14 +42,17 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: 1rem;
+  max-width: 40rem;
 }
 
 .title-wrapper {
+  height: 100%;
+  width: 100%;
   justify-content: center;
 }
 
