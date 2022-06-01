@@ -21,10 +21,21 @@ export default {
     const dateTime = new Date();
     const month = dateTime.getUTCMonth();
     return {
-      month,
+      month: 0,
     }
   },
-  methods: {}
+  methods: {
+    getMonth() {
+      const interval = setInterval(() => {
+        this.month = (this.month + 1) % 11;
+      }, 1000);
+
+      return this.month;
+    }
+  },
+  mounted() {
+    this.getMonth();
+  }
 }
 </script>
 
