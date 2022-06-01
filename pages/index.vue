@@ -17,9 +17,15 @@
 
 export default {
   components: {},
+  head () {
+    return {
+      title: '🌹',
+    }
+  },
   data () {
     return {
       month: '',
+      flowerz: ['🌹', '🌸', '💐', '🌺', '🌷', '🌻', '🌼', '💮', '🪷'],
     }
   },
   methods: {
@@ -27,10 +33,17 @@ export default {
       const dateTime = new Date();
       const month = dateTime.getUTCMonth();
       this.month = month;
+    },
+    setTitle() {
+      var interval = setInterval(() => {
+        const flower = this.flowerz.sort((a, b) => 0.5 - Math.random())[0];
+        document.title = flower;
+      }, 5000);
     }
   },
   mounted() {
     this.getMonth();
+    this.setTitle();
   }
 }
 </script>
