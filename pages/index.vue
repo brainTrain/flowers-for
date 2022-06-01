@@ -18,19 +18,15 @@
 export default {
   components: {},
   data () {
-    const dateTime = new Date();
-    const month = dateTime.getUTCMonth();
     return {
-      month: 0,
+      month: '',
     }
   },
   methods: {
     getMonth() {
-      const interval = setInterval(() => {
-        this.month = (this.month + 1) % 11;
-      }, 1000);
-
-      return this.month;
+      const dateTime = new Date();
+      const month = dateTime.getUTCMonth();
+      this.month = month;
     }
   },
   mounted() {
