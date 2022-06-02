@@ -9,23 +9,55 @@
       <section class="flower-wrapper">
         <img class="flower-image" :src="month + '-flowers.jpg'">
       </section>
+      <section class="bee-grid">
+        <AnimatedCell
+          v-for="index in totalBees"
+          :key="index + rainDirection"
+          :delay-max="delayMax"
+          :delay-min="delayMin"
+          :duration-max="durationMax"
+          :duration-min="durationMin"
+          :horizontal-max="horizontalMax"
+          :horizontal-min="horizontalMin"
+          :rain-direction="rainDirection"
+          :size-max="sizeMax"
+          :size-min="sizeMin"
+          :vertical-max="verticalMax"
+          :vertical-min="verticalMin"
+        >🐝</AnimatedCell>
+      </section>
     </div>
   </main>
 </template>
 
 <script>
+import AnimatedCell from '~/components/animated-cell.vue';
 
 export default {
-  components: {},
+  components: {
+    AnimatedCell,
+  },
   head () {
     return {
-      title: '🌹',
+      title: '🌹       🐝',
     }
   },
   data () {
     return {
       month: '',
       flowerz: ['🌹', '🌸', '💐', '🌺', '🌷', '🌻', '🌼', '💮', '🪷'],
+      delayMax: 0,
+      delayMin: 0,
+      durationMax: 10,
+      durationMin: 15,
+      horizontalMax: 100,
+      horizontalMin: 0,
+      rainDirection: 2,
+      sizeMax: 2,
+      sizeMin: 0.5,
+      totalBees: 10,
+      verticalMax: 100,
+      verticalMin: 0,
     }
   },
   methods: {
@@ -37,6 +69,7 @@ export default {
     setTitle() {
       var interval = setInterval(() => {
         const flower = this.flowerz.sort((a, b) => 0.5 - Math.random())[0];
+        console.log('broooooo',document.title.length)
         document.title = flower;
       }, 5000);
     }
@@ -56,6 +89,15 @@ export default {
   height: 100%;
   width: 100%;
   background-repeat: repeat;
+}
+
+.bee-grid {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .container {
