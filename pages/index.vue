@@ -39,7 +39,7 @@ export default {
   },
   head () {
     return {
-      title: '🌹       🐝',
+      title: '🌹🐝',
     }
   },
   data () {
@@ -69,8 +69,7 @@ export default {
     setTitle() {
       var interval = setInterval(() => {
         const flower = this.flowerz.sort((a, b) => 0.5 - Math.random())[0];
-        console.log('broooooo',document.title.length)
-        document.title = flower;
+        document.title = `${flower}🐝`;
       }, 5000);
     }
   },
