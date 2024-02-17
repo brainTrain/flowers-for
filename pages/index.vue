@@ -7,7 +7,7 @@
         </h1>
       </section>
       <section class="flower-wrapper">
-        <img class="flower-image" :src="'/' + month + '-flowers.jpg'">
+        <img class="flower-image" :src="month + '-flowers.jpg'">
       </section>
       <section class="bee-grid">
         <AnimatedCell
