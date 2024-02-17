@@ -26,12 +26,7 @@ jobs:
   build-gh-pages:
     machine:
       image: ubuntu-1604:202007-01
-    environment:
-      THINGY: 'fuck fuck shit shit'
     steps:
-      - run:
-          name: "THINGY value"
-          command: echo ${THINGY}
       - print_branch_cmd
       - install_deps_cmd
       - build_gh_pages_cmd
