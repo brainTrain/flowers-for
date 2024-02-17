@@ -50,3 +50,9 @@ workflows:
   deploy-gh-pages:
     jobs:
       - build-gh-pages
+      - deploy-gh-pages:
+          requires:
+            - build-gh-pages
+          filters:
+            branches:
+              only: main
