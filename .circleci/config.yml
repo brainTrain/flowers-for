@@ -24,6 +24,8 @@ commands:
 
   deploy_gh_pages_cmd:
     steps:
+      - run: echo "starting checkout"
+      - checkout
       - run: echo "build production project"
       - run: npm run build:production
       - run: echo "generate static production project"
