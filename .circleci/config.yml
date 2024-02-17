@@ -29,8 +29,6 @@ commands:
     - run: npm run generate:production
     - run: echo "deploy production static project to github"
     - run: npm run deploy:production
-    - run: echo "updating static project on your production server"
-    - run: git pull origin production --allow-unrelated-histories
 
 jobs:
   build-gh-pages:
