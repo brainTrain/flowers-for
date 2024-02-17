@@ -46,6 +46,9 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Set Node Options
+          command: echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> $BASH_ENV
+      - run:
           name: Deploy to GitHub Pages
           command: |
             if [ "${CIRCLE_BRANCH}" == "main" ]; then

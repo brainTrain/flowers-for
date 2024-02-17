@@ -12,6 +12,7 @@ const routerBase =
 module.exports = {
   ...routerBase,
   telemetry: false,
+  target: "static",
   /*
    ** Headers of the page
    */
