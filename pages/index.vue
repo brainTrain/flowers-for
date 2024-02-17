@@ -3,7 +3,7 @@
     <div class="container">
       <section class="title-wrapper">
         <h1 class="title">
-          Flowers For Katy
+          Flowers For {{name}}
         </h1>
       </section>
       <section class="flower-wrapper">
@@ -71,9 +71,15 @@ export default {
         const flower = this.flowerz.sort((a, b) => 0.5 - Math.random())[0];
         document.title = `${flower}🐝`;
       }, 5000);
+    },
+    getName() {
+      const nameQuery = this.$route.query.name;
+      const name =  nameQuery ? nameQuery : 'Ur mum';
+      this.name = name;
     }
   },
   mounted() {
+    this.getName();
     this.getMonth();
     this.setTitle();
   }
