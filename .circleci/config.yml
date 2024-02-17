@@ -8,8 +8,11 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run: npm install
+          keys:
+            - dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install Dependencies
+          command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -22,7 +25,7 @@ commands:
         type: string
     steps:
       - run:
-          name: Build project
+          name: Build Project
           command: npm run << parameters.build_command >>
 
 jobs:
@@ -39,22 +42,6 @@ jobs:
             - node_modules
             - dist
 
-  deploy:
-    docker:
-      - image: cimg/node:lts
-    steps:
-      - attach_workspace:
-          at: .
-      - run:
-          name: Set Node Options
-          command: echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> $BASH_ENV
-      - run:
-          name: Deploy to GitHub Pages
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "main" ]; then
-              npm run deploy:production
-            fi
-
 workflows:
   version: 2
   build-and-deploy:
@@ -66,3 +53,20 @@ workflows:
           filters:
             branches:
               only: main
+
+  deploy:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Set Node Options
+          command: echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> $BASH_ENV
+      - run:
+          name: Deploy Project
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              npm run deploy:gh-pages
+            fi
+
