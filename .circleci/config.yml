@@ -71,7 +71,7 @@ workflows:
       - build
           filters:
             branches:
-              not: main
+              ignore: main
       - deploy:
           filters:
             branches:
