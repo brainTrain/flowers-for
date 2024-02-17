@@ -47,6 +47,8 @@ jobs:
     docker:
       - image: cimg/node:lts
     steps:
+      - print_branch_cmd
+      - install_deps_cmd
       - deploy_gh_pages_cmd
 
 workflows:
