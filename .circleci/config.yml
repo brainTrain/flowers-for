@@ -51,6 +51,9 @@ jobs:
       - run:
           name: Set Node Options
           command: echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> $BASH_ENV
+      - checkout_and_install
+      - build_project:
+          build_command: "build:gh-pages"
       - run:
           name: Deploy Project
           command: |
