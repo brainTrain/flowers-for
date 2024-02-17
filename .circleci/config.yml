@@ -42,18 +42,6 @@ jobs:
             - node_modules
             - dist
 
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: main
-
   deploy:
     docker:
       - image: cimg/node:lts
@@ -70,3 +58,14 @@ workflows:
               npm run deploy:gh-pages
             fi
 
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
