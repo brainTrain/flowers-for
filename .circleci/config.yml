@@ -46,14 +46,17 @@ jobs:
     docker:
       - image: cimg/node:lts
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Set Node Options
           command: echo 'export NODE_OPTIONS=--openssl-legacy-provider' >> $BASH_ENV
       - checkout_and_install
       - build_project:
           build_command: "build:gh-pages"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+            - dist
       - run:
           name: Deploy Project
           command: |
@@ -66,9 +69,10 @@ workflows:
   build-and-deploy:
     jobs:
       - build
+          filters:
+            branches:
+              not: main
       - deploy:
-          requires:
-            - build
           filters:
             branches:
               only: main
