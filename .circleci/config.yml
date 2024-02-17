@@ -1,63 +1,65 @@
 version: 2.1
 orbs:
   node: circleci/node@4.7.0
+
 commands:
-  print_branch_cmd:
+  checkout_and_install:
+    description: "Checkout code and install dependencies"
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run: npm install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+
+  build_project:
+    description: "Build the project"
+    parameters:
+      build_command:
+        type: string
     steps:
       - run:
-          name: "current branch"
-          command: echo ${CIRCLE_BRANCH}
-
-  install_deps_cmd:
-    steps:
-      - checkout
-      - run: npm install
-
-  build_gh_pages_cmd:
-    steps:
-      - run: echo "starting checkout"
-      - checkout
-      - run: echo "finished checkout"
-      - run: echo "starting build"
-      - run: npm run build:gh-pages
-      - run: echo "finished build"
-
-  deploy_gh_pages_cmd:
-    steps:
-      - run: echo "starting checkout"
-      - checkout
-      - run: echo "build production project"
-      - run: npm run build:production
-      - run: echo "generate static production project"
-      - run: npm run generate:production
-      - run: echo "deploy production static project to github"
-      - run: npm run deploy:production
-      - run: echo "updating static project on your production server"
-      - run: git pull origin production --allow-unrelated-histories
+          name: Build project
+          command: npm run << parameters.build_command >>
 
 jobs:
-  build-gh-pages:
+  build:
     docker:
       - image: cimg/node:lts
     steps:
-      - print_branch_cmd
-      - install_deps_cmd
-      - build_gh_pages_cmd
-  deploy-gh-pages:
+      - checkout_and_install
+      - build_project:
+          build_command: "build:gh-pages"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+            - dist
+
+  deploy:
     docker:
       - image: cimg/node:lts
     steps:
-      - print_branch_cmd
-      - install_deps_cmd
-      - deploy_gh_pages_cmd
+      - attach_workspace:
+          at: .
+      - run:
+          name: Deploy to GitHub Pages
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              npm run deploy:production
+            fi
 
 workflows:
-  deploy-gh-pages:
+  version: 2
+  build-and-deploy:
     jobs:
-      - build-gh-pages
-      - deploy-gh-pages:
+      - build
+      - deploy:
           requires:
-            - build-gh-pages
+            - build
           filters:
             branches:
               only: main
