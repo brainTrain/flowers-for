@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@4.7.0
 commands:
   print_branch_cmd:
     steps:
@@ -24,8 +24,8 @@ commands:
 
 jobs:
   build-gh-pages:
-    machine:
-      image: ubuntu-1604:202007-01
+    docker:
+      - image: cimg/node:20.11.1
     steps:
       - print_branch_cmd
       - install_deps_cmd
