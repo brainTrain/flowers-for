@@ -22,6 +22,16 @@ commands:
       - run: npm run build:gh-pages
       - run: echo "finished build"
 
+  deploy_gh_pages_cmd:
+    - run: echo "build production project"
+    - run: npm run build:production
+    - run: echo "generate static production project"
+    - run: npm run generate:production
+    - run: echo "deploy production static project to github"
+    - run: npm run deploy:production
+    - run: echo: "updating static project on your production server"
+    - run: git pull origin production --allow-unrelated-histories
+
 jobs:
   build-gh-pages:
     docker:
@@ -30,6 +40,11 @@ jobs:
       - print_branch_cmd
       - install_deps_cmd
       - build_gh_pages_cmd
+  build-gh-pages:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - deploy_gh_pages_cmd
 
 workflows:
   deploy-gh-pages:
