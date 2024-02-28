@@ -32,6 +32,7 @@
 
 <script>
 import AnimatedCell from '~/components/animated-cell.vue';
+const NAME_DEFAULT = 'Ur Mum';
 
 export default {
   components: {
@@ -44,6 +45,7 @@ export default {
   },
   data () {
     return {
+      name: NAME_DEFAULT,
       month: '',
       flowerz: ['🌹', '🌸', '💐', '🌺', '🌷', '🌻', '🌼', '💮', '🪷'],
       delayMax: 0,
@@ -62,8 +64,17 @@ export default {
   },
   methods: {
     getMonth() {
+      const monthQuery = this.$route.query.month;
+      // handle null and undefined cases
+      const hasMonthQuery = Boolean(monthQuery !== null && monthQuery !== undefined);
+      // convert string to number if value is not undefined or null
+      const monthQueryValue = hasMonthQuery ? Number(monthQuery) : undefined;
+      // determine if value is a number that is between 0 and 11, inclusive
+      const isValidMonthOverride = Boolean(!isNaN(monthQueryValue) && monthQueryValue <=11 && monthQueryValue >= 0);
       const dateTime = new Date();
-      const month = dateTime.getUTCMonth();
+      // if the query value is valid, use it, otherwise use the current datetime
+      const month = isValidMonthOverride ? monthQueryValue : dateTime.getUTCMonth();
+
       this.month = month;
     },
     setTitle() {
@@ -74,7 +85,8 @@ export default {
     },
     getName() {
       const nameQuery = this.$route.query.name;
-      const name =  nameQuery ? nameQuery : 'Ur mum';
+      const name =  nameQuery ? nameQuery : NAME_DEFAULT
+
       this.name = name;
     }
   },
